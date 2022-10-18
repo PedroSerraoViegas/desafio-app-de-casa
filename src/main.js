@@ -1,4 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import LeagueItem from "./components/LeagueItem.vue";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.component("league-item", LeagueItem);
+
+app.mount("#app");
