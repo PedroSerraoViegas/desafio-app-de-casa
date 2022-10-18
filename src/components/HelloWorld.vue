@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h3>Teste de primeiro Commit</h3>
+    <h3>Desafio Sistema Futebolístico</h3>
   </div>
 </template>
 

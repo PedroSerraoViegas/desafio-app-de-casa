@@ -19,11 +19,11 @@ export default {
     },
     abbreviation: {
       type: String,
-      required: true,
+      required: false,
     },
     logoSource: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 };
