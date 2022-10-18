@@ -1,4 +1,4 @@
-# vue-first-app
+# Desafio Sistema Futebolístico
 
 ## Project setup
 ```
