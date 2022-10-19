@@ -1,8 +1,11 @@
 # Desafio Sistema Futebolístico
 
-## Project setup
 ```
-npm install
+Tela inicial com ligas - Ok
+Visualização do nome da liga, abreviação, logo e botão de classificação - Ok
+Paginação das ligas - X
+Tabela de Classificação dos Time - Ok
+Detalhes em cores diferentes para 4 primeiros e 4 últimos times - Ok
 ```
 
 ### Compiles and hot-reloads for development
