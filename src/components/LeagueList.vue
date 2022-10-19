@@ -1,8 +1,12 @@
 <template>
   <div id="#leagueDisplay">
-    <!-- <button @click="loadLeagues" id="searchButton">Search for Leagues</button> -->
+    <button @click="loadLeagues" id="searchButton">Search for Leagues</button>
     <p v-if="isLoading">Loading...</p>
-    <ul v-else id="leagueList">
+    <p v-else-if="!isLoading && error">{{ error }}</p>
+    <p v-else-if="!isLoading && (!leagues || leagues.length === 0)">
+      Could not fetch Standings data!
+    </p>
+    <ul v-else-if="!isLoading && leagues && leagues.length > 0" id="leagueList">
       <league-item
         v-for="league in leagues"
         :id="league.id"
@@ -26,11 +30,13 @@ export default {
     return {
       leagues: [],
       isLoading: false,
+      error: null,
     };
   },
   methods: {
     loadLeagues() {
       this.isLoading = true;
+      this.error = null;
       fetch("http://api-football-standings.azharimm.dev/leagues")
         .then((response) => {
           if (response.ok) {
@@ -38,7 +44,6 @@ export default {
           }
         })
         .then((data) => {
-          console.log(data);
           this.isLoading = false;
           for (let id = 0; id < data.data.length; id++) {
             this.leagues.push({
@@ -48,6 +53,11 @@ export default {
               logoSource: data.data[id].logos.light,
             });
           }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          console.log(error);
+          this.error = "Failed to fetch data - please try again later";
         });
     },
   },

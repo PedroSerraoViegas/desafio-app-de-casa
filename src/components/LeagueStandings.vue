@@ -4,7 +4,11 @@
       <router-link id="backButton" to="/leagues">Back to Leagues</router-link>
     </div>
     <p v-if="isLoading">Loading...</p>
-    <table v-else>
+    <p v-else-if="!isLoading && error">{{ error }}</p>
+    <p v-else-if="!isLoading && (!standings || standings.length === 0)">
+      Could not get standings data!
+    </p>
+    <table v-else-if="!isLoading && standings && standings.length > 0">
       <tr>
         <th>Placement</th>
         <th>Team</th>
@@ -37,6 +41,7 @@ export default {
     return {
       standings: [],
       isLoading: false,
+      error: null,
     };
   },
   methods: {
@@ -52,7 +57,6 @@ export default {
         })
         .then((data) => {
           this.isLoading = false;
-          console.log(data);
           for (let i = 0; i < data.data.standings.length; i++) {
             this.standings.push({
               id: data.data.standings[i].team.id,
@@ -60,6 +64,11 @@ export default {
               rank: data.data.standings[i].stats[10].value,
             });
           }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          console.log(error);
+          this.error = "Failed to fetch data - please try again later!";
         });
     },
   },

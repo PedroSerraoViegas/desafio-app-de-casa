@@ -6,10 +6,12 @@ import LeagueItem from "./components/LeagueItem.vue";
 import LeagueList from "./components/LeagueList.vue";
 import LeagueStandings from "./components/LeagueStandings.vue";
 import LeagueRow from "./components/LeagueRow.vue";
+import NotFound from "./components/navigation/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    { path: "/", redirect: "/leagues" },
     {
       path: "/leagues",
       component: LeagueList,
@@ -22,6 +24,7 @@ const router = createRouter({
       path: "/standings/:leagueId",
       component: LeagueStandings,
     },
+    { path: "/:notFound(.*)", component: NotFound },
   ],
   scrollBehavior(to, from, savedPosition) {
     console.log(to, from, savedPosition);
