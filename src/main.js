@@ -1,15 +1,43 @@
 import { createApp } from "vue";
+import { createRouter, createWebHistory } from "vue-router";
+
 import App from "./App.vue";
 import LeagueItem from "./components/LeagueItem.vue";
 import LeagueList from "./components/LeagueList.vue";
 import LeagueStandings from "./components/LeagueStandings.vue";
-import LeagueTeam from "./components/LeagueTeam.vue";
+import LeagueRow from "./components/LeagueRow.vue";
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/leagues",
+      component: LeagueList,
+    },
+    {
+      path: "/standings",
+      component: LeagueStandings,
+    },
+    {
+      path: "/standings/:leagueId",
+      component: LeagueStandings,
+    },
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition);
+    if (savedPosition) {
+      return savedPosition;
+    } else return { left: 0, top: 0 };
+  },
+});
 
 const app = createApp(App);
 
 app.component("league-item", LeagueItem);
 app.component("league-list", LeagueList);
 app.component("league-standings", LeagueStandings);
-app.component("league-team", LeagueTeam);
+app.component("league-row", LeagueRow);
+
+app.use(router);
 
 app.mount("#app");

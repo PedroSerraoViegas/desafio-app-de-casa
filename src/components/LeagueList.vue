@@ -1,10 +1,11 @@
 <template>
   <div id="#leagueDisplay">
-    <button @click="loadLeagues" id="searchButton">Search for Leagues</button>
+    <!-- <button @click="loadLeagues" id="searchButton">Search for Leagues</button> -->
     <p v-if="isLoading">Loading...</p>
     <ul v-else id="leagueList">
       <league-item
         v-for="league in leagues"
+        :id="league.id"
         :key="league.id"
         :name="league.name"
         :abbreviation="league.abbreviation"
@@ -37,6 +38,7 @@ export default {
           }
         })
         .then((data) => {
+          console.log(data);
           this.isLoading = false;
           for (let id = 0; id < data.data.length; id++) {
             this.leagues.push({
@@ -49,9 +51,9 @@ export default {
         });
     },
   },
-  // mounted() {
-  //   this.loadLeagues();
-  // },
+  mounted() {
+    this.loadLeagues();
+  },
 };
 </script>
 
@@ -65,8 +67,5 @@ export default {
 }
 #leagueList {
   list-style: none;
-}
-#searchButton {
-  margin-top: 2rem;
 }
 </style>

@@ -1,21 +1,38 @@
 <template>
-  <p v-if="isLoading">Loading...</p>
-  <div id="container">
-    <ul>
-      <league-team
+  <section id="standings">
+    <div>
+      <router-link id="backButton" to="/leagues">Back to Leagues</router-link>
+    </div>
+    <p v-if="isLoading">Loading...</p>
+    <table v-else>
+      <tr>
+        <th>Placement</th>
+        <th>Team</th>
+      </tr>
+      <league-row
         v-for="team in standings"
         :key="team.id"
         :name="team.name"
-      ></league-team>
-    </ul>
-  </div>
+        :rank="team.rank"
+      ></league-row>
+    </table>
+    <!-- <div id="container">
+      <ul>
+        <league-team
+          v-for="team in standings"
+          :key="team.id"
+          :name="team.name"
+        ></league-team>
+      </ul>
+    </div> -->
+  </section>
 </template>
 
 <script>
-import LeagueTeam from "./LeagueTeam.vue";
+import LeagueRow from "./LeagueRow.vue";
 
 export default {
-  components: { LeagueTeam },
+  components: { LeagueRow },
   data() {
     return {
       standings: [],
@@ -23,10 +40,10 @@ export default {
     };
   },
   methods: {
-    loadStandings() {
+    loadStandings(league) {
       this.isLoading = true;
       fetch(
-        "http://api-football-standings.azharimm.dev/leagues/eng.1/standings?season=2020&sort=asc"
+        `http://api-football-standings.azharimm.dev/leagues/${league}/standings?season=2020&sort=asc`
       )
         .then((response) => {
           if (response.ok) {
@@ -35,37 +52,69 @@ export default {
         })
         .then((data) => {
           this.isLoading = false;
-          console.log(data.data.standings[0].team.id);
+          console.log(data);
           for (let i = 0; i < data.data.standings.length; i++) {
             this.standings.push({
               id: data.data.standings[i].team.id,
               name: data.data.standings[i].team.displayName,
+              rank: data.data.standings[i].stats[10].value,
             });
           }
         });
     },
   },
-  mounted() {
-    this.loadStandings();
+  created() {
+    const leagueId = this.$route.params.leagueId;
+    this.loadStandings(leagueId);
   },
+  // mounted() {
+  //   this.loadStandings();
+  // },
 };
 </script>
 
 <style scoped>
+table {
+  border-radius: 4px;
+  border: 1px solid rgba(51, 51, 51, 0.199);
+  margin-top: 1rem;
+}
+
 ul {
   list-style: none;
   width: inherit;
 }
 
-li:nth-child(-n + 4) {
+tr:nth-child(-n + 5) {
   background-color: rgba(149, 212, 53, 0.445);
 }
 
-li:nth-child(n + 17) {
+tr:first-child {
+  background-color: rgba(79, 79, 139, 0.116);
+}
+
+tr:nth-child(n + 18) {
   background-color: rgba(255, 47, 47, 0.445);
 }
 #container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#backButton {
+  text-decoration: none;
+
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  padding: 4px 5px 4px 5px;
+  background-color: rgb(223, 206, 183);
+}
+
+#standings {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
