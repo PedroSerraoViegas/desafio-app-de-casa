@@ -1,7 +1,8 @@
 <template>
   <div id="#leagueDisplay">
-    <button @click="loadLeagues">Search for Leagues</button>
-    <ul id="leagueList">
+    <button @click="loadLeagues" id="searchButton">Search for Leagues</button>
+    <p v-if="isLoading">Loading...</p>
+    <ul v-else id="leagueList">
       <league-item
         v-for="league in leagues"
         :key="league.id"
@@ -23,10 +24,12 @@ export default {
   data() {
     return {
       leagues: [],
+      isLoading: false,
     };
   },
   methods: {
     loadLeagues() {
+      this.isLoading = true;
       fetch("http://api-football-standings.azharimm.dev/leagues")
         .then((response) => {
           if (response.ok) {
@@ -34,6 +37,7 @@ export default {
           }
         })
         .then((data) => {
+          this.isLoading = false;
           for (let id = 0; id < data.data.length; id++) {
             this.leagues.push({
               id: data.data[id].id,
@@ -45,9 +49,9 @@ export default {
         });
     },
   },
-  mounted() {
-    this.loadLeagues();
-  },
+  // mounted() {
+  //   this.loadLeagues();
+  // },
 };
 </script>
 
@@ -61,5 +65,8 @@ export default {
 }
 #leagueList {
   list-style: none;
+}
+#searchButton {
+  margin-top: 2rem;
 }
 </style>

@@ -32,7 +32,7 @@ export default {
 <style scoped>
 #league {
   margin-top: 2rem;
-  background-color: rgba(77, 73, 73, 0.712);
+  border-bottom: 1px solid black;
   border-radius: 8px;
   padding: 1.2rem;
 }
