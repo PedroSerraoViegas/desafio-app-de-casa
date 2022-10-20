@@ -1,6 +1,5 @@
 <template>
   <div id="#leagueDisplay">
-    <!-- <button @click="loadLeagues" id="searchButton">Search for Leagues</button> -->
     <q-btn
       @click="loadLeagues"
       color="secondary"

@@ -13,6 +13,19 @@
         v-model:pagination="pagination"
         :rows-per-page-options="[0]"
         no-data-label="Loading"
+        hide-pagination
+        ><template v-slot:body-cell-rank="props">
+          <q-td :props="props">
+            <div>
+              <q-badge
+                :class="[
+                  props.value < 5 && 'bg-green',
+                  props.value > 16 && 'bg-red',
+                ]"
+                :label="props.value"
+              ></q-badge>
+            </div>
+          </q-td> </template
       ></q-table>
     </div>
   </section>
@@ -75,4 +88,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+q-table:nth-child(-n + 4) {
+  background-color: green;
+}
+</style>
