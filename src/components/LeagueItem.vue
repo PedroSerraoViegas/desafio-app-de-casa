@@ -1,15 +1,12 @@
 <template>
-  <li id="league">
+  <q-item clickable v-ripple :to="'/table/' + id">
     <div id="container">
       <img v-bind:src="logoSource" />
-      <h4>
+      <h5>
         <strong>{{ name }} - {{ abbreviation }}</strong>
-      </h4>
-      <router-link id="standings" :to="'/standings/' + id"
-        >Standings</router-link
-      >
+      </h5>
     </div>
-  </li>
+  </q-item>
 </template>
 
 <script>

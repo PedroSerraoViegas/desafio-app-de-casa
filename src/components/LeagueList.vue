@@ -1,12 +1,22 @@
 <template>
   <div id="#leagueDisplay">
-    <button @click="loadLeagues" id="searchButton">Search for Leagues</button>
-    <p v-if="isLoading">Loading...</p>
+    <!-- <button @click="loadLeagues" id="searchButton">Search for Leagues</button> -->
+    <q-btn
+      @click="loadLeagues"
+      color="secondary"
+      label="Search for Leagues"
+      class="button"
+    />
+    <loading-spinner v-if="isLoading" />
     <p v-else-if="!isLoading && error">{{ error }}</p>
     <p v-else-if="!isLoading && (!leagues || leagues.length === 0)">
       Could not fetch Standings data!
     </p>
-    <ul v-else-if="!isLoading && leagues && leagues.length > 0" id="leagueList">
+    <q-list
+      bordered
+      separator
+      v-else-if="!isLoading && leagues && leagues.length > 0"
+    >
       <league-item
         v-for="league in leagues"
         :id="league.id"
@@ -15,16 +25,18 @@
         :abbreviation="league.abbreviation"
         :logo-source="league.logoSource"
       ></league-item>
-    </ul>
+    </q-list>
   </div>
 </template>
 
 <script>
 import LeagueItem from "./LeagueItem.vue";
+import LoadingSpinner from "./UI/LoadingSpinner.vue";
 
 export default {
   components: {
     LeagueItem,
+    LoadingSpinner,
   },
   data() {
     return {
@@ -44,6 +56,7 @@ export default {
           }
         })
         .then((data) => {
+          console.log(data);
           this.isLoading = false;
           for (let id = 0; id < data.data.length; id++) {
             this.leagues.push({
@@ -77,5 +90,8 @@ export default {
 }
 #leagueList {
   list-style: none;
+}
+.button {
+  margin-bottom: 1rem;
 }
 </style>

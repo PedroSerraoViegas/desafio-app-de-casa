@@ -1,9 +1,9 @@
 <template>
   <section id="standings">
     <div>
-      <router-link id="backButton" to="/leagues">Back to Leagues</router-link>
+      <q-btn color="secondary" label="All Leagues" to="/leagues" />
     </div>
-    <p v-if="isLoading">Loading...</p>
+    <loading-spinner v-if="isLoading" />
     <p v-else-if="!isLoading && error">{{ error }}</p>
     <p v-else-if="!isLoading && (!standings || standings.length === 0)">
       Could not get standings data!
@@ -20,23 +20,25 @@
         :rank="team.rank"
       ></league-row>
     </table>
-    <!-- <div id="container">
-      <ul>
-        <league-team
-          v-for="team in standings"
-          :key="team.id"
-          :name="team.name"
-        ></league-team>
-      </ul>
-    </div> -->
+    <template>
+      <div class="q-pa-md">
+        <q-table
+          title="ranking"
+          :rows="rows"
+          :columns="columns"
+          row-key="name"
+        />
+      </div>
+    </template>
   </section>
 </template>
 
 <script>
 import LeagueRow from "./LeagueRow.vue";
+import LoadingSpinner from "./UI/LoadingSpinner.vue";
 
 export default {
-  components: { LeagueRow },
+  components: { LeagueRow, LoadingSpinner },
   data() {
     return {
       standings: [],
@@ -112,13 +114,19 @@ tr:nth-child(n + 18) {
 }
 
 #backButton {
+  justify-self: flex-end;
   text-decoration: none;
-
+  max-height: 2rem;
   color: rgb(0, 0, 0);
   border: none;
   border-radius: 4px;
   padding: 4px 5px 4px 5px;
-  background-color: rgb(223, 206, 183);
+  background-color: rgb(183, 223, 195);
+}
+
+#backButton:hover {
+  cursor: pointer;
+  background-color: rgba(82, 212, 121, 0.795);
 }
 
 #standings {

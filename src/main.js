@@ -7,6 +7,10 @@ import LeagueList from "./components/LeagueList.vue";
 import LeagueStandings from "./components/LeagueStandings.vue";
 import LeagueRow from "./components/LeagueRow.vue";
 import NotFound from "./components/navigation/NotFound.vue";
+import LoadingSpinner from "./components/UI/LoadingSpinner.vue";
+import LeagueTable from "./components/LeagueTable.vue";
+import { Quasar } from "quasar";
+import quasarUserOptions from "./quasar-user-options";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,6 +28,10 @@ const router = createRouter({
       path: "/standings/:leagueId",
       component: LeagueStandings,
     },
+    {
+      path: "/table/:leagueId",
+      component: LeagueTable,
+    },
     { path: "/:notFound(.*)", component: NotFound },
   ],
   scrollBehavior(to, from, savedPosition) {
@@ -34,12 +42,14 @@ const router = createRouter({
   },
 });
 
-const app = createApp(App);
+const app = createApp(App).use(Quasar, quasarUserOptions);
 
 app.component("league-item", LeagueItem);
 app.component("league-list", LeagueList);
 app.component("league-standings", LeagueStandings);
 app.component("league-row", LeagueRow);
+app.component("loading-spinner", LoadingSpinner);
+app.component("lague-table", LeagueTable);
 
 app.use(router);
 

@@ -10,10 +10,8 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-
 // import LeagueList from "./components/LeagueList.vue";
 // import LeagueStandings from "./components/LeagueStandings.vue";
-
 export default {
   name: "App",
   components: {
