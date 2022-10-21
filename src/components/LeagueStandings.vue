@@ -50,7 +50,7 @@ export default {
     loadStandings(league) {
       this.isLoading = true;
       fetch(
-        `http://api-football-standings.azharimm.dev/leagues/${league}/standings?season=2020&sort=asc`
+        `https://api-football-standings.azharimm.dev/leagues/${league}/standings?season=2018&sort=asc`
       )
         .then((response) => {
           if (response.ok) {
@@ -76,7 +76,8 @@ export default {
   },
   created() {
     const leagueId = this.$route.params.leagueId;
-    this.loadStandings(leagueId);
+    const leagueSeason = "2020";
+    this.loadStandings(leagueId, leagueSeason);
   },
   // mounted() {
   //   this.loadStandings();
