@@ -11,6 +11,7 @@
     <p v-else-if="!isLoading && (!leagues || leagues.length === 0)">
       Could not fetch Standings data!
     </p>
+
     <q-list
       bordered
       separator

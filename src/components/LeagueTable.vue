@@ -10,14 +10,14 @@
         </div>
       </div>
       <q-table
-        table-header-class="bg-light-blue-3"
+        table-header-class="bg-light-blue-4"
         title="Season ranking"
         :rows="rows"
         :columns="columns"
         row-key="id"
         v-model:pagination="pagination"
         :rows-per-page-options="[0]"
-        :no-data-label="error"
+        no-data-label="Loading..."
         hide-pagination
         ><template v-slot:body-cell-rank="props">
           <q-td :props="props">
@@ -72,14 +72,42 @@ export default {
         align: "left",
         field: "team",
       },
+      {
+        name: "points",
+        required: true,
+        label: "Points",
+        align: "center",
+        field: "points",
+      },
+      {
+        name: "gp",
+        required: true,
+        label: "Games Played",
+        align: "center",
+        field: "gp",
+      },
+      {
+        name: "wins",
+        required: true,
+        label: "Wins",
+        align: "center",
+        field: "wins",
+      },
+      {
+        name: "losses",
+        required: true,
+        label: "Losses",
+        align: "center",
+        field: "losses",
+      },
     ];
 
     const rows = ref([]);
     const error = "";
 
-    async function fetchData(leagueId, season) {
+    async function fetchData(leagueId) {
       fetch(
-        `http://api-football-standings.azharimm.dev/leagues/${leagueId}/standings?season=${season}&sort=asc`
+        `http://api-football-standings.azharimm.dev/leagues/${leagueId}/standings?season=2018&sort=asc`
       )
         .then((response) => {
           if (response.ok) {
@@ -92,6 +120,10 @@ export default {
               rank: data.data.standings[i].stats[10].value,
               team: data.data.standings[i].team.displayName,
               logo: data.data.standings[i].team.logos[0].href,
+              points: data.data.standings[i].stats[2].value,
+              gp: data.data.standings[i].stats[0].value,
+              wins: data.data.standings[i].stats[6].value,
+              losses: data.data.standings[i].stats[1].value,
             });
           }
         })
@@ -109,15 +141,10 @@ export default {
       rows,
       error,
       model: ref("2019"),
-      options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
+      options: ["2020", "2021", "2022"],
     };
   },
 };
 </script>
 
-<style scoped>
-/* img {
-  max-width: 36px;
-  max-height: 36px;
-} */
-</style>
+<style scoped></style>

@@ -4,8 +4,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import LeagueItem from "./components/LeagueItem.vue";
 import LeagueList from "./components/LeagueList.vue";
-import LeagueStandings from "./components/LeagueStandings.vue";
-import LeagueRow from "./components/LeagueRow.vue";
 import NotFound from "./components/navigation/NotFound.vue";
 import LoadingSpinner from "./components/UI/LoadingSpinner.vue";
 import LeagueTable from "./components/LeagueTable.vue";
@@ -19,14 +17,6 @@ const router = createRouter({
     {
       path: "/leagues",
       component: LeagueList,
-    },
-    {
-      path: "/standings",
-      component: LeagueStandings,
-    },
-    {
-      path: "/standings/:leagueId",
-      component: LeagueStandings,
     },
     {
       path: "/table/:leagueId",
@@ -46,8 +36,6 @@ const app = createApp(App).use(Quasar, quasarUserOptions);
 
 app.component("league-item", LeagueItem);
 app.component("league-list", LeagueList);
-app.component("league-standings", LeagueStandings);
-app.component("league-row", LeagueRow);
 app.component("loading-spinner", LoadingSpinner);
 app.component("lague-table", LeagueTable);
 
